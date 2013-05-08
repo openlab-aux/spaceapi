@@ -3,7 +3,7 @@
 import json
 import cgi
 import cgitb
-cgitb.enable(display=0, logdir="/path/to/logdir")
+cgitb.enable(display=0, logdir="/tmp/")
 from time import time
 
 args = cgi.FieldStorage()
