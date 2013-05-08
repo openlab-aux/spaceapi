@@ -1,0 +1,18 @@
+{
+"api": "0.12", 
+"address": "Elisenstra\\u00dfe 1, 86150 Augsburg, Germany", 
+"lat": 48.357712100000001, 
+"logo": "https://www.openlab-augsburg.de/_media/openwiki:bootstrap:logo-symbol-only.png?cache=", 
+"open": true, 
+"icon": {
+    "open": "https://api.openlab-augsburg.de/open.png", 
+    "closed": "https://api.openlab-augsburg.de/closed.png"
+}, 
+"space": "OpenLab", 
+"url": "https://www.openlab-augsburg.de", 
+"lon": 10.8867969, 
+"lastchange": 1368043491, 
+"contact": {
+    "ml": "alle@lists.openlab-augsburg.de", 
+    "twitter": "@openlabaugsburg"}
+}
