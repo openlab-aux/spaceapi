@@ -1,29 +1,24 @@
 #-*- coding: utf-8 -*-
 
 import json
-#import cgi
-#import cgitb
-#cgitb.enable(display=0, logdir="/path/to/logdir")
-import os
+import cgi
+import cgitb
+cgitb.enable(display=0, logdir="/path/to/logdir")
 from time import time
 
-args = {}
-split_qry = os.environ["QUERY_STRING"].split("&")
-for arg in split_qry:
-  key , value = arg.split("=")
-  arg[key]=value
+args = cgi.FieldStorage()
 
 DATAPATH = "/var/www/data.json"
 TOKENPATH = "/var/www/token"
 
 token = open(TOKENPATH,"r").read()
-if token == args["token"]:
+if token == args["token"].value:
     data_file = open(DATAPATH,"r")
     data = json.loads(data_file.read())
     data_file.close()
-    for key, value in args:
+    for key, field in args.items():
         if key == "update_device_count":
-            data["open"] = value > 0
+            data["open"] = field.value > 0
         # elif key == "some_other_command":
         #   do stuff
         else:
