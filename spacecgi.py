@@ -1,35 +1,50 @@
-#-*- coding: utf-8 -*-
+#!/usr/bin/python2
 
-import json
+# Please change the token before deploying.
+
 import cgi
-import cgitb
-cgitb.enable(display=0, logdir="/tmp/")
+import json
+import sys
 from time import time
 
+print "Content-type: text/plain"
+print ""
+
 args = cgi.FieldStorage()
+if not "token" in args.keys():
+    print "Pls authenticate"
+    sys.exit(0)
 
-DATAPATH = "/var/www/data.json"
-TOKENPATH = "/var/www/token"
-
-token = open(TOKENPATH,"r").read()
-if token == args["token"].value:
-    data_file = open(DATAPATH,"r")
+try:
+    data_file = open("data.json", "r")
     data = json.loads(data_file.read())
     data_file.close()
-    for key, field in args.items():
-        if key == "update_device_count":
-            data["open"] = field.value > 0
-        # elif key == "some_other_command":
-        #   do stuff
-        else:
-            pass #ignore invalid commands
-    data["lastchange"] = int(time())
-    data_file = open(DATAPATH,"w")
-    data_file.write(json.dumps(data))
-    print "Content-Type: text/plain"
-    print
-    print "Success!"
+
+except:
+    print ("Error opening files")
+    sys.exit(0)
+
+if str(args["token"].value) != "lolnope":
+    print "Fak u"
+    sys.exit(0)
+
+if not "update_device_count" in args.keys():
+    print "What do you want to do?"
+    sys.exit(0)
+
+# change data
+if int(args["update_device_count"].value) > 0:
+    data["open"] = True
 else:
-    print "Content-Type: text/plain"
-    print
-    print "Fak u dolan, y u do tis dolan?"
+    data["open"] = False
+
+data["lastchange"] = int(time())
+
+# save data
+try:
+    datafile = open("data.json", "w")
+    datafile.write(json.dumps(data))
+    datafile.close()
+    print "This was a triumph"
+except:
+    print "cannot save changes"
